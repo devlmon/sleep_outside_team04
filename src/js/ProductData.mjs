@@ -6,10 +6,19 @@ function convertToJson(res) {
   }
 }
 
+const productDataUrls = import.meta.glob("../json/*.json", {
+  eager: true,
+  import: "default",
+  query: "?url",
+});
+
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `../json/${this.category}.json`;
+    this.path = productDataUrls[`../json/${category}.json`];
+    if (!this.path) {
+      throw new Error(`No product data found for category "${category}"`);
+    }
   }
   getData() {
     return fetch(this.path)
