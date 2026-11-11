@@ -3,8 +3,12 @@ import { getLocalStorage } from "./utils.mjs";
 function renderCartContents() {
   // Load the saved cart items and display them.
   const cartItems = getLocalStorage("so-cart");
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+  // If the shopping cart is empty, the code inside the conditional statement will not be executed.
+  if (cartItems && cartItems.length > 0) {
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  }
 }
 
 function cartItemTemplate(item) {
