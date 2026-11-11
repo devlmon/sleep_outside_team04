@@ -193,6 +193,7 @@ button {
 
 /* End product list card */
 
+/* Product detail styles */
 .product-detail {
   padding: 1em;
   max-width: 500px;
@@ -241,6 +242,7 @@ button {
   grid-column: 3;
 }
 
+/* Responsive layout adjustments */
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
@@ -257,6 +259,7 @@ button {
   }
 }
 
+/* Footer styles */
 footer {
   font-size: var(--small-font);
   padding: 1em;

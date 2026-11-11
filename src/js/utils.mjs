@@ -32,3 +32,13 @@ export function getParam(param) {
     const product = urlParams.get(param);
     return product;
 }
+
+// Render items with a template, optionally clearing existing content first.
+export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
+  const htmlStrings = list.map(template);
+  // if clear is true we need to clear out the contents of the parent.
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
