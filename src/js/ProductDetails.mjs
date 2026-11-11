@@ -17,10 +17,10 @@ export default class ProductDetails {
         document.getElementById('addToCart').addEventListener('click', this.addProductToCart.bind(this));
     }
 
-    addProductToCart(product) {
+    addProductToCart() {
         // An array is created for the shopping cart, and the added product is stored in that array.
         let cart = [];
-        cart.push(product);
+        cart.push(this.product);
         // I check to see if there are any other products stored in localStorage; if so,
         // they are also added to the cart.
         const cartItems = getLocalStorage("so-cart");
