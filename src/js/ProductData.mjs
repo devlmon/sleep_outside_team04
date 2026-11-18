@@ -1,21 +1,28 @@
+// SERVER URL
+const baseURL = import.meta.env.VITE_SERVER_URL
+
 export default class ProductData {
-  // Category name, Path to the Category's JSON file.
+  // Category name, Path to the Category's JSON file. Inactive.
   constructor(category) {
-    this.category = category;
-    this.path = `/json/${this.category}.json`;
+    //this.category = category;
+    //this.path = `/json/${this.category}.json`;
   }
 
-  getData() {
-    // Parses the JSON content and returns a promise with the data.
-    return fetch(this.path)
-      .then(convertToJson)
-      .then((data) => data);
+  async getData(category) {
+    // It retrieves information from the server and converts it into a format that JavaScript can read.
+    const response = await fetch(`${baseURL}products/search/${category} `);
+    const data = await convertToJson(response);
+    return data.Result;
   }
 
   async findProductById(id) {
     // Returns the data for the requested product.
-    const products = await this.getData();
-    return products.find((item) => item.Id === id);
+    const response = await fetch(`${baseURL}product/${id} `);
+    const product = await convertToJson(response);
+    return product.Result;
+
+    //const products = await this.getData();
+    //return products.find((item) => item.Id === id);
   }
 }
 
