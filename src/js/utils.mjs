@@ -33,6 +33,22 @@ export function getParam(param) {
     return product;
 }
 
+export function getProductImageUrl(images) {
+    // Depending on the window's resolution, choose the most appropriate image to display.
+    const width = window.innerWidth;
+
+    if (width < 400) {
+        return images.PrimarySmall;
+    }
+    if (width < 700) {
+        return images.PrimaryMedium;
+    }
+    if (width < 1000) {
+        return images.PrimaryLarge;
+    }
+    return images.PrimaryExtraLarge;
+}
+
 // Render items with a template, optionally clearing existing content first.
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
     const htmlStrings = list.map(template);

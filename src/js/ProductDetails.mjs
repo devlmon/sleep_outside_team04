@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, getProductImageUrl, setLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
     // ID, Product Data, and Data Source. 
@@ -43,7 +43,7 @@ function productDetailsTemplate(product) {
     // Pre-built structure of the product page.
     return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
             <h2 class="divider">${product.NameWithoutBrand}</h2>
-            <img class="divider" src="${product.Images.PrimaryExtraLarge}" alt="${product.NameWithoutBrand}"/>
+            <img class="divider" src="${getProductImageUrl(product.Images)}" alt="${product.NameWithoutBrand}"/>
             <p class="product-card__price">$${product.FinalPrice}</p>
             <p class="product__color">${product.Colors[0].ColorName}</p>
             <p class="product__description">${product.DescriptionHtmlSimple}</p>

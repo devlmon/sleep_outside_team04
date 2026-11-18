@@ -1,0 +1,122 @@
+@media screen and (min-width: 1000px) {
+  body {
+    max-width: 1440px;
+    margin: 0 auto;
+    font-size: var(--font-base);
+  }
+
+  header {
+    padding: 0.75rem 2rem;
+  }
+
+  header .logo {
+    font-size: 30px;
+  }
+
+  header .logo img {
+    flex-basis: 60px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .hero picture > img {
+    height: clamp(360px, 36vw, 520px);
+  }
+
+  .mission {
+    top: 1rem;
+    font-size: 1.2em;
+  }
+
+  .mission p {
+    width: min(70%, 56rem);
+  }
+
+  .products {
+    padding: 1.5rem 2rem;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .product-grid img {
+    width: min(150px, 100%);
+    height: 140px;
+  }
+
+  .product-list {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .product-card {
+    height: 100%;
+    max-width: none;
+    padding: 1rem;
+  }
+
+  .product-card img {
+    height: 220px;
+  }
+
+  .product-detail {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-areas:
+      "image brand"
+      "image title"
+      "image price"
+      "image color"
+      "image description"
+      "image add";
+    column-gap: clamp(2rem, 4vw, 4rem);
+    row-gap: 0.75rem;
+    align-items: start;
+    max-width: 1200px;
+    padding: 2rem;
+  }
+
+  .product-detail > h3 {
+    grid-area: brand;
+  }
+
+  .product-detail > h2 {
+    grid-area: title;
+  }
+
+  .product-detail > img {
+    grid-area: image;
+    height: min(68vh, 680px);
+    min-height: 400px;
+    max-height: 680px;
+  }
+
+  .product-detail > .product-card__price {
+    grid-area: price;
+  }
+
+  .product-detail > .product__color {
+    grid-area: color;
+  }
+
+  .product-detail > .product__description {
+    grid-area: description;
+  }
+
+  .product-detail > .product-detail__add {
+    grid-area: add;
+    width: 100%;
+  }
+
+  .cart-card {
+    grid-template-columns: minmax(150px, 20%) minmax(0, 1fr) 12%;
+    gap: 1rem;
+    padding: 1rem 0;
+    font-size: inherit;
+  }
+
+  .cart-card__image img {
+    max-height: 180px;
+  }
+}

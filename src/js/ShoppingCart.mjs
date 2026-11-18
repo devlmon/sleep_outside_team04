@@ -1,4 +1,4 @@
-import { getLocalStorage, renderListWithTemplate } from "./utils.mjs";
+import { getLocalStorage, getProductImageUrl, renderListWithTemplate } from "./utils.mjs";
 
 export default class ShoppingCart {
   constructor(listElement) {
@@ -28,7 +28,7 @@ function cartItemTemplate(item) {
   return `
     <li class="cart-card divider">
       <a href="#" class="cart-card__image">
-        <img src="${item.Images.PrimaryMedium}" alt="${item.Name}"/>
+        <img src="${getProductImageUrl(item.Images)}" alt="${item.Name}"/>
       </a>
       <a href="#">
         <h2 class="card__name">${item.Name}</h2>

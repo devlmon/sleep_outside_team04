@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sleep Outside | Home</title>
     <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="/css/style-large.css"
+      media="(min-width: 1000px)"
+    />
     <script type="module" src="/js/main.js"></script>
   </head>
 
@@ -15,11 +20,13 @@
 
     <main class="divider">
       <div class="hero">
-        <img
-          src="/images/banner-sm.jpg"
-          srcset="/images/banner-sm.jpg 500w, /images/banner.jpg"
-          alt="image of a high mountain lake"
-        />
+        <picture>
+          <source media="(min-width: 1000px)" srcset="/images/banner.jpg" />
+          <img
+            src="/images/banner-sm.jpg"
+            alt="image of a high mountain lake"
+          />
+        </picture>
         <div class="logo logo--square">
           <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
           <div>Sleep<span class="highlight">Outside</span></div>
