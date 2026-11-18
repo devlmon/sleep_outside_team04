@@ -10,7 +10,7 @@ export default class ProductList {
 
   async init() {
     // Get the product data and render it in the page.
-    const list = await this.dataSource.getData();
+    const list = await this.dataSource.getData(this.category);
     this.renderList(list);
   }
 
@@ -25,8 +25,8 @@ function productCardTemplate(product) {
   // Pre-built structure for product cards.
   return `
     <li class="product-card">
-        <a href="product_pages/?product=${product.Id}">
-          <img src="${product.Image}" alt="${product.Name}">
+        <a href="/product_pages/?product=${product.Id}">
+          <img src="${product.Images.PrimaryMedium}" alt="${product.Name}">
           <h2>${product.Brand.Name}</h2>
           <h3>${product.Name}</h3>
           <p class="product-card__price">$${product.FinalPrice}</p>
