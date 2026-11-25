@@ -14,6 +14,7 @@
       href="/css/style-large.css"
       media="(min-width: 1000px)"
     />
+    <script src="../js/checkout.js" type="module"></script>
   </head>
 
   <body>
@@ -22,8 +23,182 @@
     </header>
 
     <main class="divider">
-      <section class="products">
+      <section class="products checkout">
         <h2>Review & Place your Order</h2>
+        <div class="checkout-layout">
+          <!-- Input names match the fields expected by the checkout service. -->
+          <form id="checkout-form" class="checkout-form" method="post">
+            <fieldset class="checkout-section">
+              <legend>Customer Name</legend>
+              <div class="checkout-fields">
+                <div class="checkout-field">
+                  <label for="first-name">First Name</label>
+                  <input
+                    id="first-name"
+                    name="fname"
+                    type="text"
+                    autocomplete="given-name"
+                    required
+                  />
+                </div>
+                <div class="checkout-field">
+                  <label for="last-name">Last Name</label>
+                  <input
+                    id="last-name"
+                    name="lname"
+                    type="text"
+                    autocomplete="family-name"
+                    required
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="checkout-section">
+              <legend>Address</legend>
+              <p class="checkout-section__hint">
+                Billing and shipping use the same address.
+              </p>
+              <div class="checkout-fields">
+                <div class="checkout-field checkout-field--wide">
+                  <label for="street-address">Street Address</label>
+                  <input
+                    id="street-address"
+                    name="street"
+                    type="text"
+                    autocomplete="street-address"
+                    required
+                  />
+                </div>
+                <div class="checkout-field">
+                  <label for="city">City</label>
+                  <input
+                    id="city"
+                    name="city"
+                    type="text"
+                    autocomplete="address-level2"
+                    required
+                  />
+                </div>
+                <div class="checkout-field">
+                  <label for="state">State (2-letter code)</label>
+                  <input
+                    id="state"
+                    name="state"
+                    type="text"
+                    autocomplete="address-level1"
+                    pattern="[A-Za-z]{2}"
+                    title="Enter the two-letter state code, such as ID."
+                    maxlength="2"
+                    required
+                  />
+                </div>
+                <div class="checkout-field">
+                  <label for="zip-code">ZIP Code</label>
+                  <input
+                    id="zip-code"
+                    name="zip"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    pattern="[0-9]{5}(-[0-9]{4})?"
+                    title="Enter a 5-digit ZIP code, optionally followed by a 4-digit extension."
+                    required
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="checkout-section">
+              <legend>Payment</legend>
+              <div class="checkout-fields">
+                <div class="checkout-field checkout-field--wide">
+                  <label for="card-number">Credit Card Number</label>
+                  <input
+                    id="card-number"
+                    name="cardNumber"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="cc-number"
+                    pattern="(?:[0-9] ?){12,18}[0-9]"
+                    maxlength="23"
+                    title="Enter a 13- to 19-digit card number."
+                    required
+                  />
+                </div>
+                <div class="checkout-field">
+                  <label for="expiration-date">Expiration Date</label>
+                  <input
+                    id="expiration-date"
+                    name="expiration"
+                    type="month"
+                    autocomplete="cc-exp"
+                    required
+                  />
+                </div>
+                <div class="checkout-field">
+                  <label for="security-code">Security Code</label>
+                  <input
+                    id="security-code"
+                    name="code"
+                    type="password"
+                    inputmode="numeric"
+                    autocomplete="cc-csc"
+                    pattern="[0-9]{3,4}"
+                    maxlength="4"
+                    title="Enter the 3- or 4-digit security code."
+                    required
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <button class="checkout-submit" type="submit">Checkout</button>
+            <p
+              id="checkout-message"
+              class="checkout-message"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
+
+          <aside
+            id="order-summary"
+            class="checkout-summary"
+            aria-labelledby="order-summary-title"
+          >
+            <h3 id="order-summary-title">Order Summary</h3>
+            <!-- The subtotal loads with the cart; estimates appear for a valid ZIP. -->
+            <dl>
+              <div class="checkout-summary__row">
+                <dt>
+                  Subtotal
+                  <span
+                    id="item-count"
+                    class="checkout-summary__item-count"
+                  ></span>
+                </dt>
+                <dd id="subtotal">$0.00</dd>
+              </div>
+              <div class="checkout-summary__row">
+                <dt>Tax (6%)</dt>
+                <dd id="tax">—</dd>
+              </div>
+              <div class="checkout-summary__row">
+                <dt>Shipping Estimate</dt>
+                <dd id="shipping">—</dd>
+              </div>
+              <div class="checkout-summary__row checkout-summary__total">
+                <dt>Order Total</dt>
+                <dd id="total">—</dd>
+              </div>
+            </dl>
+            <p class="checkout-summary__note">
+              Tax and shipping are estimates. A real checkout must verify totals
+              on the server before payment.
+            </p>
+          </aside>
+        </div>
       </section>
     </main>
 

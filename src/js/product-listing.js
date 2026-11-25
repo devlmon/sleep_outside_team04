@@ -1,4 +1,4 @@
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import { loadHeaderFooter, getParam } from "./utils.mjs";
 
@@ -16,8 +16,8 @@ const categoryTitle = category
   : "";
 document.querySelector(".title").textContent = categoryTitle;
 
-// Instance of the ProductData class.
-const dataSource = new ProductData();
+// Instance of the ExternalServices class.
+const dataSource = new ExternalServices();
 
 // Get element to render in.
 const listElement = document.querySelector(".product-list");
