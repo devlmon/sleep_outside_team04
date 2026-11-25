@@ -42,11 +42,15 @@ export default class ExternalServices {
   }
 }
 
-function convertToJson(res) {
+// Parse a server response and preserve server details when the request fails.
+async function convertToJson(res) {
   // Check to see if the JSON was successfully retrieved.
+  const jsonResponse = await res.json();
   if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error("Bad Response");
+    return jsonResponse;
   }
+  throw {
+    name: "servicesError",
+    message: JSON.stringify(jsonResponse),
+  };
 }

@@ -1,4 +1,9 @@
-import { getLocalStorage, getProductImageUrl, setLocalStorage } from "./utils.mjs";
+import {
+    alertMessage,
+    getLocalStorage,
+    getProductImageUrl,
+    setLocalStorage,
+} from "./utils.mjs";
 
 export default class ProductDetails {
     // ID, Product Data, and Data Source. 
@@ -31,6 +36,7 @@ export default class ProductDetails {
         }
         // The cart is then stored in localStorage.
         setLocalStorage("so-cart", cart);
+        alertMessage(`${this.product.NameWithoutBrand} added to your cart.`);
     }
 
     renderProductDetails() {
