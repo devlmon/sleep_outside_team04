@@ -151,7 +151,7 @@ export default class CheckoutProcess {
   }
 }
 
-// Convert saved product records to the smaller order-item structure.
+// Convert saved product records to the smaller order-item structure...
 function packageItems(items) {
   return items.map((item) => ({
     id: item.Id,
