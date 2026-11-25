@@ -6,7 +6,10 @@ function renderCartContents() {
 
   // If the shopping cart is empty, the code inside the conditional statement will not be executed.
   if (cartItems && cartItems.length > 0) {
-    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    const filterList = cartItems.filter((item, index) => {
+        return cartItems.findIndex(product => product.Id === item.Id) === index;
+    });
+    const htmlItems = filterList.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
   }
 }
