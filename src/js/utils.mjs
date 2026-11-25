@@ -42,3 +42,11 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function renderWithTemplateIvan(templatefn, parentElement, data,position="afterbegin", clear=false){
+    const htmlString= data.map(templatefn).join("");
+    if (clear){
+        parentElement.innerHTML="";
+    }
+    parentElement.insertAdjacentHTML(position, htmlString.join(''));
+};
