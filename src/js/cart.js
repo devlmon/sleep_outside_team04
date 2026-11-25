@@ -1,8 +1,10 @@
-import { getLocalStorage } from "./utils.mjs";
+import ShoppingCart from "./ShoppingCart.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
 
-function renderCartContents() {
-  // Load the saved cart items and display them.
-  const cartItems = getLocalStorage("so-cart");
+// Create and initialize the shopping cart.
+const element = document.querySelector(".product-list");
+const shoppingCart = new ShoppingCart(element);
+shoppingCart.init();
 
   // If the shopping cart is empty, the code inside the conditional statement will not be executed.
   if (cartItems && cartItems.length > 0) {
@@ -33,4 +35,5 @@ function cartItemTemplate(item) {
 
 // Set up and render the cart content on the cart page.
 renderCartContents();
+// Render the header and footer.
 loadHeaderFooter();
