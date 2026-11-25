@@ -26,6 +26,7 @@
       <section class="products checkout">
         <h2>Review & Place your Order</h2>
         <div class="checkout-layout">
+          <!-- Input names match the fields expected by the checkout service. -->
           <form id="checkout-form" class="checkout-form" method="post">
             <fieldset class="checkout-section">
               <legend>Customer Name</legend>
@@ -34,7 +35,7 @@
                   <label for="first-name">First Name</label>
                   <input
                     id="first-name"
-                    name="firstName"
+                    name="fname"
                     type="text"
                     autocomplete="given-name"
                     required
@@ -44,7 +45,7 @@
                   <label for="last-name">Last Name</label>
                   <input
                     id="last-name"
-                    name="lastName"
+                    name="lname"
                     type="text"
                     autocomplete="family-name"
                     required
@@ -63,7 +64,7 @@
                   <label for="street-address">Street Address</label>
                   <input
                     id="street-address"
-                    name="streetAddress"
+                    name="street"
                     type="text"
                     autocomplete="street-address"
                     required
@@ -96,7 +97,7 @@
                   <label for="zip-code">ZIP Code</label>
                   <input
                     id="zip-code"
-                    name="zipCode"
+                    name="zip"
                     type="text"
                     inputmode="numeric"
                     autocomplete="postal-code"
@@ -129,7 +130,7 @@
                   <label for="expiration-date">Expiration Date</label>
                   <input
                     id="expiration-date"
-                    name="expirationDate"
+                    name="expiration"
                     type="month"
                     autocomplete="cc-exp"
                     required
@@ -139,7 +140,7 @@
                   <label for="security-code">Security Code</label>
                   <input
                     id="security-code"
-                    name="securityCode"
+                    name="code"
                     type="password"
                     inputmode="numeric"
                     autocomplete="cc-csc"
@@ -167,6 +168,7 @@
             aria-labelledby="order-summary-title"
           >
             <h3 id="order-summary-title">Order Summary</h3>
+            <!-- The subtotal loads with the cart; estimates appear for a valid ZIP. -->
             <dl>
               <div class="checkout-summary__row">
                 <dt>

@@ -1,3 +1,4 @@
+import ExternalServices from "./ExternalServices.mjs";
 import { getLocalStorage } from "./utils.mjs";
 
 export default class CheckoutProcess {
@@ -9,9 +10,11 @@ export default class CheckoutProcess {
     this.shipping = 0;
     this.tax = 0;
     this.orderTotal = 0;
+    this.externalServices = new ExternalServices();
   }
 
   init() {
+    // Load the saved cart before displaying its subtotal.
     this.list = getLocalStorage(this.key) ?? [];
     if (!Array.isArray(this.list)) {
       throw new TypeError("The saved cart must contain a list of items.");
@@ -20,6 +23,7 @@ export default class CheckoutProcess {
   }
 
   calculateItemSubTotal() {
+    // Sum rounded cents to avoid floating-point errors in currency values.
     const itemTotalInCents = this.list.reduce((total, item) => {
       const price = Number(item.FinalPrice);
       if (!Number.isFinite(price) || price < 0) {
@@ -45,6 +49,7 @@ export default class CheckoutProcess {
   }
 
   calculateOrderTotal() {
+    // Apply the shared tax rate and shipping estimate to the cart subtotal.
     const itemTotalInCents = Math.round(this.itemTotal * 100);
     this.tax = Math.round(itemTotalInCents * 0.06) / 100;
     this.shipping =
@@ -57,6 +62,7 @@ export default class CheckoutProcess {
   }
 
   clearOrderTotals() {
+    // Keep estimates hidden until the ZIP code is valid.
     this.tax = 0;
     this.shipping = 0;
     this.orderTotal = 0;
@@ -81,4 +87,43 @@ export default class CheckoutProcess {
       currency: "USD",
     }).format(amount);
   }
+
+  async checkout(form) {
+    this.calculateOrderTotal();
+    const order = formDataToJSON(form);
+    const [year, month] = order.expiration.split("-");
+
+    // Match the server's expected field names and expiration format.
+    order.orderDate = new Date().toISOString();
+    order.expiration = `${Number(month)}/${year.slice(-2)}`;
+    order.cardNumber = order.cardNumber.replace(/\s/g, "");
+    order.orderTotal = this.orderTotal.toFixed(2);
+    order.shipping = this.shipping;
+    order.tax = this.tax.toFixed(2);
+    order.items = packageItems(this.list);
+
+    return this.externalServices.checkout(order);
+  }
+}
+
+// Convert saved product records to the smaller order-item structure.
+function packageItems(items) {
+  return items.map((item) => ({
+    id: item.Id,
+    name: item.Name,
+    price: Number(item.FinalPrice),
+    quantity: 1,
+  }));
+}
+
+// Build an object whose keys match the form input names.
+function formDataToJSON(formElement) {
+  const formData = new FormData(formElement);
+  const convertedJSON = {};
+
+  formData.forEach((value, key) => {
+    convertedJSON[key] = value;
+  });
+
+  return convertedJSON;
 }

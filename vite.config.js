@@ -1,12 +1,14 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
 
+// Build the site from its source directory as a multi-page app.
 export default defineConfig({
   root: "src/",
 
   build: {
     outDir: "../dist",
     rollupOptions: {
+      // Include every page entry in the production build.
       input: {
         main: resolve(__dirname, "src/index.html"),
         cart: resolve(__dirname, "src/cart/index.html"),

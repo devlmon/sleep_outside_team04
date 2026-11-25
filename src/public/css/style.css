@@ -1,3 +1,4 @@
+/* Shared colors, typography, and base element styles. */
 :root {
   --font-body: Arial, Helvetica, sans-serif;
   --font-headline: Haettenschweiler, "Arial Narrow Bold", sans-serif;
@@ -51,6 +52,7 @@ button:hover {
   transform: scale(1.04);
 }
 
+/* Header, branding, and home hero styles. */
 header {
   display: flex;
   align-items: center;
@@ -149,6 +151,7 @@ p {
   color: var(--tertiary-color);
 }
 
+/* Shared button appearance and hover feedback. */
 button {
   display: block;
   width: 100%;
@@ -203,6 +206,7 @@ button {
   text-align: center;
 }
 
+/* Product grids, cards, and checkout form. */
 .products {
   margin-top: 2rem;
   padding: 1rem clamp(0.75rem, 3vw, 1.25rem);
@@ -436,6 +440,7 @@ button {
   font-size: 1em;
 }
 
+/* Product details and cart item layouts. */
 .product-detail {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -519,6 +524,7 @@ footer {
   text-align: center;
 }
 
+/* Shared hover and pressed feedback for links and buttons. */
 a:hover {
   color: var(--tertiary-color);
   transform: scale(1.04);

@@ -1,7 +1,7 @@
 // SERVER URL
-const baseURL = import.meta.env.VITE_SERVER_URL
+const baseURL = import.meta.env.VITE_SERVER_URL;
 
-export default class ProductData {
+export default class ExternalServices {
   // Category name, Path to the Category's JSON file. Inactive.
   constructor(category) {
     //this.category = category;
@@ -23,6 +23,22 @@ export default class ProductData {
 
     //const products = await this.getData();
     //return products.find((item) => item.Id === id);
+  }
+
+  // Send the prepared order as JSON and return the server response.
+  async checkout(payload) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    };
+    const response = await fetch(
+      "https://wdd330-backend-osp8.onrender.com/checkout",
+      options,
+    );
+    return convertToJson(response);
   }
 }
 
