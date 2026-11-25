@@ -14,7 +14,7 @@ shoppingCart.init();
     const htmlItems = filterList.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
   }
-}
+
 
 function cartItemTemplate(item) {
   // Pre-built structure of the cart items.

@@ -72,7 +72,7 @@ export function renderWithTemplateIvan(templatefn, parentElement, data,position=
         parentElement.innerHTML = "";
     }
     parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
-}
+
 
 // Render a template.
 export function renderWithTemplate(template, parentElement, data, callback) {
