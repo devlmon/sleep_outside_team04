@@ -48,5 +48,5 @@ export function renderWithTemplateIvan(templatefn, parentElement, data,position=
     if (clear){
         parentElement.innerHTML="";
     }
-    parentElement.insertAdjacentHTML(position, htmlString.join(''));
+    parentElement.insertAdjacentHTML(position, htmlString);
 };

@@ -33,3 +33,4 @@ function cartItemTemplate(item) {
 
 // Set up and render the cart content on the cart page.
 renderCartContents();
+loadHeaderFooter();
