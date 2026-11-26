@@ -65,13 +65,7 @@ export function renderWithTemplateIvan(templatefn, parentElement, data,position=
         parentElement.innerHTML="";
     }
     parentElement.insertAdjacentHTML(position, htmlString);
-};
-    const htmlStrings = list.map(template);
-    // if clear is true we need to clear out the contents of the parent.
-    if (clear) {
-        parentElement.innerHTML = "";
-    }
-    parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
 
 
 // Render a template.

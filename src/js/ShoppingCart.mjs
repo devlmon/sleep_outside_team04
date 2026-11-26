@@ -13,7 +13,24 @@ export default class ShoppingCart {
 
     // If the shopping cart is empty, the code inside the conditional statement will not be executed.
     if (cartItems && cartItems.length > 0) {
-      this.renderList(cartItems);
+      // Remove duplicate products and calculate their quantities.
+        const uniqueItems = cartItems.reduce((accumulator, item) => {
+
+        const existingItem = accumulator.find(
+            product => product.Id === item.Id
+        );
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            accumulator.push({ ...item, quantity: 1 });
+        }
+
+        return accumulator;
+
+      }, []);
+
+      this.renderList(uniqueItems);
     }
   }
 
@@ -34,7 +51,7 @@ function cartItemTemplate(item) {
         <h2 class="card__name">${item.Name}</h2>
       </a>
       <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-      <p class="cart-card__quantity">qty: 1</p>
+      <p class="cart-card__quantity">qty: ${item.quantity}</p>
       <p class="cart-card__price">$${item.FinalPrice}</p>
     </li>`;
 }
