@@ -85,13 +85,22 @@ export function getProductImageUrl(images) {
 
 // Render items with a template, optionally clearing existing content first.
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
-    const htmlStrings = list.map(template);
-    // if clear is true we need to clear out the contents of the parent.
-    if (clear) {
-        parentElement.innerHTML = "";
-    }
-    parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+  const htmlStrings = list.map(template);
+  // if clear is true we need to clear out the contents of the parent.
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function renderWithTemplateIvan(templatefn, parentElement, data,position="afterbegin", clear=false){
+    const htmlString= data.map(templatefn).join("");
+    if (clear){
+        parentElement.innerHTML="";
+    }
+    parentElement.insertAdjacentHTML(position, htmlString);
+}
+
 
 // Render a template.
 export function renderWithTemplate(template, parentElement, data, callback) {
