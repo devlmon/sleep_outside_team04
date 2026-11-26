@@ -1,7 +1,8 @@
 import ExternalServices from "./ExternalServices.mjs";
-import { getLocalStorage } from "./utils.mjs";
+import { alertMessage, getLocalStorage } from "./utils.mjs";
 
 export default class CheckoutProcess {
+  // Set up cart state, order totals, and the service used to submit orders.
   constructor(key, outputSelector) {
     this.key = key;
     this.outputSelector = outputSelector;
@@ -20,6 +21,43 @@ export default class CheckoutProcess {
       throw new TypeError("The saved cart must contain a list of items.");
     }
     this.calculateItemSubTotal();
+    this.initCheckoutForm();
+  }
+
+  // Configure checkout-specific fields and connect their event handlers.
+  initCheckoutForm() {
+    const checkoutForm = document.querySelector("#checkout-form");
+    const checkoutMessage = document.querySelector("#checkout-message");
+    const expirationDate = document.querySelector("#expiration-date");
+    const zipCode = document.querySelector("#zip-code");
+    const currentDate = new Date();
+
+    // Prevent the customer from selecting an expiration month in the past.
+    expirationDate.min = `${currentDate.getFullYear()}-${String(
+      currentDate.getMonth() + 1,
+    ).padStart(2, "0")}`;
+
+    // Recalculate estimates only while the entered ZIP code is valid.
+    zipCode.addEventListener("input", () => {
+      if (zipCode.value && zipCode.checkValidity()) {
+        this.calculateOrderTotal();
+      } else {
+        this.clearOrderTotals();
+      }
+    });
+
+    // Prevent the page from reloading and check the checkout result.
+    checkoutForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      checkoutMessage.textContent = "Submitting your order...";
+
+      try {
+        await this.checkout(checkoutForm);
+      } catch (error) {
+        checkoutMessage.textContent = "";
+        alertMessage(`Order could not be submitted: ${error.message}`);
+      }
+    });
   }
 
   calculateItemSubTotal() {
@@ -36,6 +74,7 @@ export default class CheckoutProcess {
     this.displayItemSubTotal();
   }
 
+  // Update the subtotal amount and the number of items shown in the summary.
   displayItemSubTotal() {
     const subtotal = document.querySelector(`${this.outputSelector} #subtotal`);
     const itemCount = document.querySelector(
@@ -69,10 +108,12 @@ export default class CheckoutProcess {
     this.displayOrderTotals(false);
   }
 
+  // Render the current order estimates or hide them when they are unavailable.
   displayOrderTotals(showTotals = true) {
     const tax = document.querySelector(`${this.outputSelector} #tax`);
     const shipping = document.querySelector(`${this.outputSelector} #shipping`);
     const total = document.querySelector(`${this.outputSelector} #total`);
+    // Hide estimates until the ZIP code has passed validation.
     const displayValue = (amount) =>
       showTotals ? this.formatCurrency(amount) : "—";
 
@@ -81,6 +122,7 @@ export default class CheckoutProcess {
     total.textContent = displayValue(this.orderTotal);
   }
 
+  // Format a numeric amount as US dollars.
   formatCurrency(amount) {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -88,6 +130,7 @@ export default class CheckoutProcess {
     }).format(amount);
   }
 
+  // Prepare and submit the order, then clear the cart and open the success page.
   async checkout(form) {
     this.calculateOrderTotal();
     const order = formDataToJSON(form);
@@ -102,11 +145,13 @@ export default class CheckoutProcess {
     order.tax = this.tax.toFixed(2);
     order.items = packageItems(this.list);
 
-    return this.externalServices.checkout(order);
+    await this.externalServices.checkout(order);
+    localStorage.removeItem(this.key);
+    window.location.href = "/checkout/success.html";
   }
 }
 
-// Convert saved product records to the smaller order-item structure.
+// Convert saved product records to the smaller order-item structure...
 function packageItems(items) {
   return items.map((item) => ({
     id: item.Id,
