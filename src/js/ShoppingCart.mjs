@@ -10,11 +10,14 @@ export default class ShoppingCart {
     // Set up and render the cart content on the cart page.
     // Load the saved cart items.
     const cartItems = getLocalStorage("so-cart");
+    // Get the elements that will be displayed depending on whether the shopping cart contains products to display.
+    const emptyMessage = document.querySelector(".cart-empty");
+    const cartFooter = document.querySelector(".cart-footer");
 
     // If the shopping cart is empty, the code inside the conditional statement will not be executed.
     if (cartItems && cartItems.length > 0) {
       // Remove duplicate products and calculate their quantities.
-        const uniqueItems = cartItems.reduce((accumulator, item) => {
+      const uniqueItems = cartItems.reduce((accumulator, item) => {
 
         const existingItem = accumulator.find(
             product => product.Id === item.Id
@@ -27,10 +30,27 @@ export default class ShoppingCart {
         }
 
         return accumulator;
-
       }, []);
 
+      // Display the items in the shopping cart.
       this.renderList(uniqueItems);
+
+      // Hide the message indicating that the cart is empty.
+      emptyMessage.classList.add("hide");
+
+      // Calculate the total price of the products.
+      const totalInCents = cartItems.reduce((total, item) => {
+        const price = Number(item.FinalPrice);
+        return total + Math.round(price * 100);
+      }, 0);
+
+      // Displays the page information and the “Checkout” button.
+      cartFooter.classList.remove("hide");
+      document.querySelector(".cart-total__amount").textContent =
+        `$${(totalInCents / 100).toFixed(2)}`;
+    } else {
+      // Show the message indicating that the cart is empty.
+      emptyMessage.classList.remove("hide");
     }
   }
 
