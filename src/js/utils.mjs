@@ -13,6 +13,40 @@ export function setLocalStorage(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
+// Show a dismissible message that automatically disappears after four seconds.
+export function alertMessage(message, scroll = true) {
+    const main = qs("main");
+    const existingAlert = main.querySelector(".alert");
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+
+    const alert = document.createElement("div");
+    alert.classList.add("alert");
+    alert.setAttribute("role", "alert");
+
+    const alertText = document.createElement("span");
+    alertText.classList.add("alert__message");
+    alertText.textContent = message;
+
+    const closeButton = document.createElement("button");
+    closeButton.classList.add("alert__close");
+    closeButton.setAttribute("type", "button");
+    closeButton.setAttribute("aria-label", "Dismiss message");
+    closeButton.textContent = "×";
+    // Let users dismiss the alert before its timeout.
+    closeButton.addEventListener("click", () => alert.remove());
+
+    alert.append(alertText, closeButton);
+    main.prepend(alert);
+    // Remove the alert after its four-second display period.
+    window.setTimeout(() => alert.remove(), 4000);
+
+    if (scroll) {
+        window.scrollTo(0, 0);
+    }
+}
+
 // It adds touchend and click listeners to the selected element.
 export function setClick(selector, callback) {
     qs(selector).addEventListener("touchend", (event) => {
